@@ -1,4 +1,5 @@
 # from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from drf_yasg import openapi
@@ -9,9 +10,11 @@ from conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('api/v1/', include('apps.urls')),
+    path('api/v1/', include('store.urls')),
 ]
 if settings.DEBUG:
+    # newCod
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     schema_view = get_schema_view(
         openapi.Info(
             title="API",

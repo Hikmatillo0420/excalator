@@ -1,11 +1,13 @@
 from django.core.exceptions import ValidationError
-from django.db.models import Model, DateTimeField, CharField, TextField, ImageField, SlugField, FloatField, \
+from django.db.models import Model, DateTimeField, CharField, TextField, ImageField, SlugField, IntegerField, \
+    FloatField, \
     PositiveBigIntegerField, ForeignKey, CASCADE
 from re import sub as re_sub
 from re import match as re_match
-from django.utils.translation import gettext_lazy as _
+from django.db import models
 
-from django_ckeditor_5.fields import CKEditor5Field
+from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 
 
 class BaseModel(Model):
@@ -41,23 +43,39 @@ def validate_phone(value):
 
 class Category(BaseModel):
     title = CharField(max_length=255, verbose_name=_("Name"))
-    description = CKEditor5Field(verbose_name=_('Description'))
+    description = TextField(verbose_name=_('Description'))
     image = ImageField(upload_to='images/category', verbose_name=_('Image'))
     slug = SlugField(max_length=255, verbose_name=_('Slug'), unique=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(Category, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
 
+    class Meta:
+        app_label = 'store'
+
 
 class Product(BaseModel):
-    category = ForeignKey(Category, on_delete=CASCADE, verbose_name=_('Category'))
+    category = ForeignKey('store.Category', on_delete=CASCADE, verbose_name=_('Category'))
     title = CharField(max_length=255, verbose_name=_("Name"))
-    quantity = PositiveBigIntegerField(default=1, null=True, blank=True, verbose_name=_('Quantity'))
+    quantity = PositiveBigIntegerField(default=1, verbose_name=_('Quantity'))
     # made_in = CharField(max_length=255, null=True, verbose_name=_('made_in'))
     daily_price = FloatField(verbose_name="daily_price", default=0)
     hourly_price = FloatField(verbose_name="hourly_price", default=0)
     description = TextField(verbose_name=_('Description'))
     slug = SlugField(max_length=255, verbose_name=_('Slug'), unique=True)
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(Product, self).save(*args, **kwargs)
 
 
 class ProductImage(BaseModel):
@@ -75,3 +93,21 @@ class Request(BaseModel):
 
     def __str__(self):
         return self.title
+
+
+class Order(BaseModel):
+    class TimeType(models.TextChoices):
+        daily_price = 'daily_price', _('daily_price')
+        hourly_price = 'hourly_price', _('hourly_price')
+
+    name = CharField(max_length=255, verbose_name=_('Full name'))
+    phone = CharField(_('Phone'), max_length=255, validators=(validate_phone,))
+    address = CharField(max_length=255, verbose_name=_("Address"))
+    description = TextField(verbose_name=_('Description'), null=True, blank=True)
+    product = ForeignKey('store.Product', on_delete=CASCADE, related_name='orders', verbose_name='product')
+    type = CharField(max_length=255, verbose_name=_('Type'), choices=TimeType.choices)
+    price = FloatField(verbose_name=_('Price'))
+    quantity = IntegerField(default=1, verbose_name=_('Quantity'))
+
+    def __str__(self):
+        return self.name

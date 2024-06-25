@@ -6,7 +6,7 @@ from environs import Env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.append(os.path.join(BASE_DIR, 'apps'))
+# sys.path.append(os.path.join(BASE_DIR, 'apps'))
 env = Env()
 env.read_env()
 # Quick-start development settings - unsuitable for production
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # My apps\
-    'store.apps.StoreConfig',
+    'store',
 
     # Third-party libraries
     'rest_framework',
@@ -130,7 +130,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -208,7 +207,6 @@ CELERY_TIMEZONE = os.getenv('TIME_ZONE')
 
 LOGIN_URL = 'admin/'
 LOGIN_REDIRECT_URL = '/'
-
 
 if DEBUG:
     MIDDLEWARE += (
