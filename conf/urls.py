@@ -17,7 +17,7 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     schema_view = get_schema_view(
         openapi.Info(
-            title="API",
+            title="Excavator",
             default_version='v1',
             description="",
             # terms_of_service="https://www.google.com/policies/terms/",
