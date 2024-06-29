@@ -102,7 +102,7 @@ class Order(BaseModel):
 
     name = CharField(max_length=255, verbose_name=_('Full name'))
     phone = CharField(_('Phone'), max_length=255, validators=(validate_phone,))
-    address = CharField(max_length=255, verbose_name=_("Address"))
+    address = CharField(max_length=255, verbose_name=_("Address"),  null=True, blank=True)
     description = TextField(verbose_name=_('Description'), null=True, blank=True)
     product = ForeignKey('store.Product', on_delete=CASCADE, related_name='orders', verbose_name='product')
     type = CharField(max_length=255, verbose_name=_('Type'), choices=TimeType.choices)
