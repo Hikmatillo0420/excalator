@@ -6,7 +6,8 @@ from store.models import Category, Product, ProductImage, Request, Order
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('id', 'title', 'description', 'image', 'slug')
+        fields = (
+            'id', 'title', 'title_uz', 'title_ru', 'description', 'description_uz', 'description_ru', 'image', 'slug')
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
@@ -20,7 +21,9 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'category', 'title', 'quantity', 'daily_price', 'hourly_price', 'description', 'slug', 'images')
+        fields = (
+            'id', 'category', 'title', 'title_uz', 'title_ru', 'quantity', 'daily_price', 'hourly_price', 'description',
+            'description_uz', 'description_ru', 'slug', 'images')
 
     def get_images(self, obj):
         return [image.image.url for image in obj.images.all()]
