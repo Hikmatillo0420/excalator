@@ -4,7 +4,6 @@ from django.utils.html import format_html
 from store.models import Category, Product, Request, Order, ProductImage
 
 
-
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 0
