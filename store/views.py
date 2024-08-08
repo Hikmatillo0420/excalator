@@ -1,7 +1,8 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
 
-from store.models import Category, Product, Request, Order
-from store.serializers import CategorySerializer, ProductSerializer, RequestSerializer, OrderSerializer
+from store.models import Category, Product, Request, Order, UrlVideo
+from store.serializers import CategorySerializer, ProductSerializer, RequestSerializer, OrderSerializer, \
+    UrlVideoSerializer
 
 
 class CatgoryListView(ListAPIView):
@@ -38,4 +39,6 @@ class OrderView(CreateAPIView):
     serializer_class = OrderSerializer
 
 
-
+class UrlVideoView(RetrieveAPIView):
+    queryset = UrlVideo.objects.all()
+    serializer_class = UrlVideoSerializer

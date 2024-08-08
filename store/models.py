@@ -111,3 +111,12 @@ class Order(BaseModel):
 
     def __str__(self):
         return self.name
+
+
+class UrlVideo(BaseModel):
+    url_address = CharField(max_length=255, verbose_name=_('Video link'))
+    customer_name = CharField(max_length=255, verbose_name=_('Customer Name'))
+    work_address = CharField(max_length=255, verbose_name=_('Work Address'))
+
+    def __str__(self):
+        return self.customer_name

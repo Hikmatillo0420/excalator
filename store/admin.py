@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from store.models import Category, Product, Request, Order, ProductImage
+from store.models import Category, Product, Request, Order, ProductImage, UrlVideo
 
 
 class ProductImageInline(admin.TabularInline):
@@ -43,3 +43,8 @@ class RequestAdmin(admin.ModelAdmin):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'phone', 'address', 'description', 'product', 'type', 'price', 'quantity']
+
+
+@admin.register(UrlVideo)
+class UrlVideoAdmin(admin.ModelAdmin):
+    list_display = ['id', 'url_address', 'customer_name', 'work_address']
