@@ -10,6 +10,6 @@ urlpatterns = [
     path('product/<slug:slug>', ProductDetailView.as_view(), name='product_detail'),  # Yangi yo'l
     path('request', RequestView.as_view(), name='request'),
     path('order', OrderView.as_view(), name='order'),
-    path('urlVideo', UrlVideoView.as_view(), name='urlVideo'),
+    path('url_video', UrlVideoView.as_view(), name='urlVideo'),
 
 ]
