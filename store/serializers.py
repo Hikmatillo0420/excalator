@@ -25,8 +25,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'id', 'category', 'title', 'title_uz', 'title_ru', 'quantity', 'daily_price', 'hourly_price', 'description',
             'description_uz', 'description_ru', 'slug', 'images')
 
-    def get_images(self, obj):
-        return [image.url for image in obj.images.all()]
+
 
 
 class RequestSerializer(serializers.ModelSerializer):
