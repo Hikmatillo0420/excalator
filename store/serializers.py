@@ -26,7 +26,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'description_uz', 'description_ru', 'slug', 'images')
 
     def get_images(self, obj):
-        return [image.url for image in obj.images.all()]
+        return [image.image.url if image.image else None for image in obj.images.all()]
 
 
 class RequestSerializer(serializers.ModelSerializer):
