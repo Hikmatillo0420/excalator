@@ -39,6 +39,6 @@ class OrderView(CreateAPIView):
     serializer_class = OrderSerializer
 
 
-class UrlVideoView(RetrieveAPIView):
+class UrlVideoView(ListAPIView):
     queryset = UrlVideo.objects.all()
     serializer_class = UrlVideoSerializer
