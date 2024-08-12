@@ -42,10 +42,8 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class UrlVideoSerializer(serializers.ModelSerializer):
-    iframe_url = serializers.SerializerMethodField()
+
+
     class Meta:
         model = UrlVideo
-        fields = ('id', 'url_address', 'customer_name', 'work_address', 'iframe_url')
-
-    def get_iframe_url(self, obj):
-        return obj.get_iframe_url()
+        fields = ('id', 'url_address', 'customer_name', 'work_address')

@@ -118,12 +118,11 @@ class UrlVideo(BaseModel):
     customer_name = CharField(max_length=255, verbose_name=_('Customer Name'))
     work_address = CharField(max_length=255, verbose_name=_('Work Address'))
 
+    def save(self, *args, **kwargs):
+        video_id = self.url_address.split('youtu.be/')[1].split('?')[0]
+        params = "si=7Yl10RyvzR8oavkv"
+        self.url_address = f"https://www.youtube.com/embed/{video_id}?{params}"
+        super(UrlVideo, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.customer_name
-
-    def get_iframe_url(self):
-        # Agar URL youtubening to'g'ridan-to'g'ri URL bo'lsa, embed formatiga o'tkazish:
-        if "https://youtu.be" in self.url_address:
-            video_id = self.url_address.split("v=")[1]
-            return f"https://www.youtube.com/embed/{video_id}"
-        return self.url_address
