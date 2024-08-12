@@ -123,7 +123,7 @@ class UrlVideo(BaseModel):
 
     def get_iframe_url(self):
         # Agar URL youtubening to'g'ridan-to'g'ri URL bo'lsa, embed formatiga o'tkazish:
-        if "youtube.com/watch?v=" in self.url_address:
+        if "https://youtu.be" in self.url_address:
             video_id = self.url_address.split("v=")[1]
             return f"https://www.youtube.com/embed/{video_id}"
         return self.url_address
